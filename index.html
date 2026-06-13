@@ -14,11 +14,10 @@
             margin: 0;
             color: #00ff41;
         }
-        form {
+        .container {
             background: #162b45;
             padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            border-radius: 8px;
             width: 300px;
             text-align: center;
         }
@@ -41,19 +40,24 @@
             border-radius: 4px;
             font-weight: bold;
             cursor: pointer;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <form>
+    <div class="container">
         <h2>Login to ChitChat</h2>
-        <input type="text" placeholder="Username" required>
-        <input type="password" placeholder="Password" required>
-        <a href="dashboard.html">
-    <button type="button">Login</button>
-</a>
-    </form>
+        
+        <form>
+            <input type="text" placeholder="Username" required>
+            <input type="password" placeholder="Password" required>
+        </form>
+
+        <a href="dashboard.html" style="text-decoration: none;">
+            <button type="button">Login</button>
+        </a>
+    </div>
 
 </body>
 </html>
