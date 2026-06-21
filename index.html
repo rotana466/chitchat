@@ -2,61 +2,241 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ChitChat Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FINCHTECH - Login</title>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+      // Import Firebase Auth
+      import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBzK4tt4gI-B8GAJVXqKpgQD6PTdtuxkbo",
+        authDomain: "chat-base-35120.firebaseapp.com",
+        projectId: "chat-base-35120",
+        storageBucket: "chat-base-35120.firebasestorage.app",
+        messagingSenderId: "132736236077",
+        appId: "1:132736236077:web:d021488cc88724970ed6a4",
+        measurementId: "G-FTTH2WE910"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth(app);
+
+      // Handle Login Form Submission
+      window.handleLogin = function(event) {
+          event.preventDefault();
+          
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const errorMessage = document.getElementById("error-message");
+          
+          errorMessage.style.display = "none";
+
+          // Log in with Firebase
+          signInWithEmailAndPassword(auth, email, password)
+              .then((userCredential) => {
+                  const user = userCredential.user;
+                  alert("Welcome back! Login successful.");
+                  // Redirect to home dashboard later: window.location.href = "dashboard.html";
+              })
+              .catch((error) => {
+                  errorMessage.style.display = "block";
+                  errorMessage.innerText = error.message;
+              });
+      };
+    </script>
+
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
-            font-family: sans-serif;
+            background-color: #0b0f19;
+            color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #0b1d33;
-            margin: 0;
-            color: #00ff41;
+            overflow: hidden;
         }
-        .container {
-            background: #162b45;
-            padding: 25px;
-            border-radius: 8px;
-            width: 300px;
+
+        .login-container {
+            background: #111827;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #1f2937;
             text-align: center;
         }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #00ff41;
-            border-radius: 4px;
-            background-color: #0b1d33;
-            color: #00ff41;
-            box-sizing: border-box;
+
+        .brand-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
         }
-        button {
+
+        .brand-subtitle {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .input-group input {
             width: 100%;
+            padding: 12px 16px;
+            background: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .error-box {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
             padding: 10px;
-            background-color: #00ff41;
-            color: #0b1d33;
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
+            border-radius: 6px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            display: none;
+            text-align: left;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            margin-bottom: 25px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            color: #9ca3af;
             cursor: pointer;
-            margin-top: 10px;
+        }
+
+        .remember-me input {
+            margin-right: 6px;
+            accent-color: #3b82f6;
+        }
+
+        .forgot-pass {
+            color: #3b82f6;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .forgot-pass:hover {
+            color: #60a5fa;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+
+        .login-btn:hover {
+            opacity: 0.95;
+        }
+
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+
+        .signup-redirect {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: #9ca3af;
+        }
+
+        .signup-redirect a {
+            color: #10b981;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-redirect a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>Login to ChitChat</h2>
-        
-        <form>
-            <input type="text" placeholder="Username" required>
-            <input type="password" placeholder="Password" required>
+    <div class="login-container">
+        <div class="brand-logo">FINCHTECH</div>
+        <p class="brand-subtitle">Secure Access Portal</p>
+
+        <div class="error-box" id="error-message"></div>
+
+        <form onsubmit="handleLogin(event);">
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email" required autocomplete="email">
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+            </div>
+
+            <div class="actions">
+                <label class="remember-me">
+                    <input type="checkbox"> Remember me
+                </label>
+                <a href="#" class="forgot-pass">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="login-btn">Sign In</button>
         </form>
 
-        <a href="dashboard.html" style="text-decoration: none;">
-            <button type="button">Login</button>
-        </a>
+        <div class="signup-redirect">
+            Don't have an account? <a href="#">Sign Up</a>
+        </div>
     </div>
 
 </body>
